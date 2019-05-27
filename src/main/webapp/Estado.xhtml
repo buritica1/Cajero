@@ -10,64 +10,35 @@
 
 </h:head>
 <h:body>
+	<h2>Crear Estado</h2>
+
 	<h:form>
 		<p:growl id="growl" life="2000" />
-		<p:fieldset legend="Crear Estado" style="margin-bottom:20px">
-			<h:panelGrid columns="2" cellpadding="5">
-				<h:outputText value="Descripcion: " />
-				<h:inputText id="Descripcion" size="40" maxlength="60"
-					value="#{estadoBean.descripcion}" required="true">
-					<p:ajax event="keyup" update="out"
-						listener="#{estadoBean.handleKeyEvent}" />
-				</h:inputText>
-			</h:panelGrid>
-			<br />
-
+		<p:fieldset legend="Estado Cuenta" style="margin-bottom:20px">
+			<h:outputText value="Descripcion: " />
+			<h:inputText id="descripcion" size="40" maxlength="60"
+				value="#{estadoBean.descripcion}">
+			</h:inputText>
+			
 			<p:commandButton value="enviar" id="send" update="growl"
 				action="#{estadoBean.buttonAction}" style="margin-right:20px;"
 				styleClass="ui-priority-primary" />
 		</p:fieldset>
-		<h:outputLabel id="out" value="#{estadoBean.descripcion}" />
 	</h:form>
+	
+	<h:form>
+		<p:commandButton value="Mostrar" actionListener="#{estadoBean.listar()}" update="table" />
+				
+    <p:dataTable  id="table" value="#{estadoBean.lista}"  var="p">
+       <p:column headerText="id">
+           <h:outputText value="#{p.idEstado}" />
+       </p:column>
+        <p:column headerText="Descripcion">
+           <h:outputText value="#{p.descripcion}" />
+       </p:column>
+       
+    </p:dataTable>
+   </h:form>
 
-	<h:form id="readEstado">
-		<p:growl id="msg" showDetail="true" />
-		<p:fieldset legend="Estado" style="margin-bottom:20px">
-			<p:dataTable id="EstadoTable" var="esta"
-				value="#{estadoBean.lstEstado}" editable="true">
-				<p:ajax event="rowEdit" listener="#{estadoBean.onRowEdit}"
-					update=":readEstado:msg" />
-				<p:ajax event="rowEditCancel" listener="#{estadoBean.onRowCancel}"
-					update=":readEstado:msg" />
-
-				<p:column headerText="Descripcion">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{esta.descripcion}" />
-						</f:facet>
-
-						<f:facet name="input">
-							<p:inputText id="descripcion" size="40" maxlength="60"
-								value="#{esta.descripcion}" required="true">
-							</p:inputText>
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
-
-				<p:column style="width:35px">
-					<p:rowEditor />
-					<p:commandButton
-						action="#{estadoBean.deleteEstado(esta.idEstado, esta.descripcion)}"
-						id="delete" style="margin-right:20px;" icon="pi pi-times"
-						title="Eliminar Estado" update=":readEstado:msg" />
-				</p:column>
-
-				<p:ajax event="rowEdit"
-					listener="#{estadoBean.updateEstado(esta)}"
-					update="EstadoTable" />
-
-			</p:dataTable>
-		</p:fieldset>
-	</h:form>
 </h:body>
 </html>

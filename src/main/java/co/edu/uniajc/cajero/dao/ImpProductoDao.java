@@ -8,8 +8,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
-
 import co.edu.uniajc.cajero.model.Producto;
 import co.edu.uniajc.cajero.model.Producto_;
 
@@ -50,7 +48,7 @@ public class ImpProductoDao implements ProductoDao {
 	public Producto findById(int id) {
 		// TODO Auto-generated method stub
 		Transaction tx = null;
-		Producto Producto = null;
+		Producto producto = null;
 		try {
 			tx = session.beginTransaction();
 			
@@ -67,7 +65,7 @@ public class ImpProductoDao implements ProductoDao {
 					builder.equal(root.get(Producto_.idProducto), id)
 					);
 			
-			Producto = session.createQuery(criteria).getSingleResult();
+			producto = session.createQuery(criteria).getSingleResult();
 			
 			tx.commit();
 			
@@ -78,7 +76,7 @@ public class ImpProductoDao implements ProductoDao {
 			}
 			e.printStackTrace();
 		}
-		return Producto;
+		return producto;
 	}
 
 	@Override
@@ -110,7 +108,7 @@ public class ImpProductoDao implements ProductoDao {
 			return null;
 		}
 	}
-/*
+
 	@Override
 	public Producto Update(int id, String desc) {
 		// TODO Auto-generated method stub
@@ -145,11 +143,12 @@ public class ImpProductoDao implements ProductoDao {
 		}
 		return producto;
 	}
-*/
+
 	@Override
-	public Producto Update(Producto p) {
+	public Producto Delete(int id) {
+		// TODO Auto-generated method stub
 		Transaction tx = null;
-		Producto Producto = null;
+		Producto producto = null;
 		try {
 			tx = session.beginTransaction();
 			
@@ -160,35 +159,13 @@ public class ImpProductoDao implements ProductoDao {
 			
 			criteria.select(root);
 			criteria.where(
-					builder.equal(root.get(Producto_.idProducto), p.getIdProducto())
+					builder.equal(root.get(Producto_.idProducto), id)
 					);
-			Producto = session.createQuery(criteria).getSingleResult();
+			producto = session.createQuery(criteria).getSingleResult();
 			
-			Producto.setDescripcion(p.getDescripcion());
-			session.update(Producto);
-			
-			tx.commit();
-		}
-		catch (Exception e) {
-			if(tx != null) {
-				tx.rollback();
-			}
-			e.printStackTrace();
-		}
-		return Producto;
-	}
-	
-	@Override
-	public Producto delete(int id) {
-		// TODO Auto-generated method stub
-		Transaction tx = null;
-		Producto Producto = null;
-		try {
-			tx = session.beginTransaction();
-			
-			Producto p = (Producto ) session.createCriteria(Producto.class)
-					.add(Restrictions.eq("idProducto", id)).uniqueResult();
-			session.delete(p);
+			// Delete
+			producto.setIdProducto(id);
+			session.delete(producto);
 			
 			tx.commit();
 		}
@@ -198,7 +175,7 @@ public class ImpProductoDao implements ProductoDao {
 			}
 			e.printStackTrace();			
 		}
-		return Producto;
+		return null;
 	}
 	
 	public void closeSession() {

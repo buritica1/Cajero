@@ -7,67 +7,88 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-
+	<title>Producto</title>
+	<meta name="content-type" content="text/html; charset=UTF-8" />
+	<title>Bootstrap Admin Theme v3</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link
+		href="#{facesContext.externalContext.request.scheme}://#{facesContext.externalContext.request.serverName}:#{facesContext.externalContext.request.serverPort}#{facesContext.externalContext.request.contextPath}/bootstrap/css/bootstrap.min.css"
+		rel="stylesheet" />
 </h:head>
 <h:body>
-	<h:form>
-		<p:growl id="growl" life="2000" />
-		<p:fieldset legend="Crear Producto" style="margin-bottom:20px">
-			<h:panelGrid columns="2" cellpadding="5">
-				<h:outputText value="Descripcion: " />
-				<h:inputText id="Descripcion" size="40" maxlength="60"
-					value="#{productoBean.descripcion}" required="true">
-					<p:ajax event="keyup" update="out"
-						listener="#{productoBean.handleKeyEvent}" />
-				</h:inputText>
-			</h:panelGrid>
-			<br />
+	<nav
+		class="navbar navbar-expand-lg navbar-light p-3 mb-2 bg-secondary text-white">
+	<span class="navbar-brand mb-0 h1 text-warning">Eco Cajero</span>
+	<button class="navbar-toggler" type="button" data-toggle="collapse"
+		data-target="#navbarSupportedContent"
+		aria-controls="navbarSupportedContent" aria-expanded="false"
+		aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
 
-			<p:commandButton value="enviar" id="send" update="growl"
-				action="#{productoBean.buttonAction}" style="margin-right:20px;"
-				styleClass="ui-priority-primary" />
-		</p:fieldset>
-		<h:outputLabel id="out" value="#{productoBean.descripcion}" />
-	</h:form>
+	<div class="collapse navbar-collapse col-md-12 offset-md-8"
+		id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item active"><a class="nav-link text-white"
+				href="#">Home <span class="sr-only">(current)</span>
+			</a></li>
+			<li class="nav-item"><a class="nav-link text-white"
+				href="UserView.xhtml">Usuario</a></li>
+			<li class="nav-item"><a class="nav-link text-white"
+				href="TipoIdentificacion.xhtml">Tipo Identificación</a></li>
+			<li class="nav-item"><a class="nav-link text-white"
+				href="Estado.xhtml">Estado</a></li>
+			<li class="nav-item"><a class="nav-link text-white"
+				href="Producto.xhtml">Producto</a></li>
+		</ul>
+	</div>
+	</nav>
+	<div class="container">
+		<!-- Page Content goes here -->
+		<div class="row">
+			<div class="col-m12 mt-5 mb-2">
+				<h:form>
+					<div class="form-group">
+						<p:growl id="growl" life="2000" />
+						<p:fieldset legend="Producto">
+							<div class="form-group">
+								<label for="Descripcion">Descripción:</label>
+								<h:inputText class="form-control form-control-lg"
+									id="descripcion" size="40" maxlength="60"
+									value="#{productoBean.descripcion}">
+								</h:inputText>
+							</div>
 
-	<h:form id="readProductos">
-		<p:growl id="msg" showDetail="true" />
-		<p:fieldset legend="Producto" style="margin-bottom:20px">
-			<p:dataTable id="ProductoTable" var="prod"
-				value="#{productoBean.lstProductos}" editable="true">
-				<p:ajax event="rowEdit" listener="#{productoBean.onRowEdit}"
-					update=":readProductos:msg" />
-				<p:ajax event="rowEditCancel" listener="#{productoBean.onRowCancel}"
-					update=":readProductos:msg" />
+							<p:commandButton value="enviar" id="send" update="growl"
+								class="btn btn-primary" action="#{productoBean.buttonAction}" />
+						</p:fieldset>
+					</div>
+				</h:form>
 
-				<p:column headerText="Descripcion">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{prod.descripcion}" />
-						</f:facet>
+				<h:form>
+					<p:commandButton value="Mostrar"
+						class="btn btn-primary mb-3 mt-5 ml-3"
+						actionListener="#{productoBean.listar()}" update="table" />
 
-						<f:facet name="input">
-							<p:inputText id="descripcion" size="40" maxlength="60"
-								value="#{prod.descripcion}" required="true">
-							</p:inputText>
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
+					<p:dataTable id="table" class="table striped "
+						value="#{productoBean.lista}" var="p">
 
-				<p:column style="width:35px">
-					<p:rowEditor />
-					<p:commandButton
-						action="#{productoBean.deleteProducto(prod.idProducto, prod.descripcion)}"
-						id="delete" style="margin-right:20px;" icon="pi pi-times"
-						title="Eliminar Producto" update=":readProductos:msg" />
-				</p:column>
+						<p:column headerText="id">
+							<h:outputText value="#{p.idProducto}" />
+						</p:column>
+						<p:column headerText="Descripcion">
+							<h:outputText value="#{p.descripcion}" />
+						</p:column>
 
-				<p:ajax event="rowEdit"
-					listener="#{productoBean.updateProducto(prod)}"
-					update="ProductoTable" />
-
-			</p:dataTable>
-		</p:fieldset>
-	</h:form>
+					</p:dataTable>
+				</h:form>
+			</div>
+		</div>
+	</div>
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://code.jquery.com/jquery.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script
+		src="#{facesContext.externalContext.request.scheme}://#{facesContext.externalContext.request.serverName}:#{facesContext.externalContext.request.serverPort}#{facesContext.externalContext.request.contextPath}/bootstrap/js/bootstrap.min.js"></script>
 </h:body>
 </html>

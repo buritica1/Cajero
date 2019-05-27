@@ -27,7 +27,7 @@ public class Usuario implements java.io.Serializable {
 	private Integer idUsuario;
 	
 	@OneToOne
-	@JoinColumn(name="tipoidentificacion")
+	@JoinColumn(name="tipo_identificacion")
 	private TipoIdentificacion tipoIdentificacion;
 	private String identificacion;
 	private String nombre;

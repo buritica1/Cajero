@@ -5,7 +5,6 @@ package co.edu.uniajc.cajero.service;
 import java.io.Serializable;
 import java.util.List;
 import org.hibernate.Session;
-
 import co.edu.uniajc.cajero.dao.ImpEstadoDao;
 import co.edu.uniajc.cajero.model.Estado;
 
@@ -35,8 +34,8 @@ public class EstadoService implements Serializable{
 		EstadoDao.save(Estado);
 	}
 	
-	public Estado Update(Estado estado){
-		return EstadoDao.Update(estado);
+	public Estado Update(int id,String desc){
+		return EstadoDao.Update(id,desc);
 	}
 	public Estado Delete(int id){
 		return EstadoDao.Delete(id);

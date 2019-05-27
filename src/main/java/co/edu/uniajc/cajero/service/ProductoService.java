@@ -31,12 +31,12 @@ public class ProductoService implements Serializable {
 		return productoDao.findByall();
 	}
 	
-	public Producto update(Producto producto) {
-		return productoDao.Update(producto);
+	public Producto Update(int id, String desc) {
+		return productoDao.Update(id, desc);
 	}
 	
-	public Producto delete(int id) {
-		return productoDao.delete(id);
+	public Producto Delete(int id) {
+		return productoDao.Delete(id);
 	}
 	
 	public void closeSession() {

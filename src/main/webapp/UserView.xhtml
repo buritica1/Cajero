@@ -4,78 +4,24 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
 
 <h:head>
 
 </h:head>
 <h:body>
-	<h2>Create User</h2>
-
-	<h:form>
-		<p:growl id="growl" life="2000" />
-		<p:fieldset legend="Crear Usuario" style="margin-bottom:20px">
-			<h:panelGrid columns="2" cellpadding="5">
-				<h:outputLabel for="tipoIdentificacion" value="Tipo Identificacion:" />
-				<h:selectOneMenu id="tipoIdentificacion"
-					value="#{userBean.tipoIdentificacion}" required="true">
-					<f:selectItems value="#{userBean.lstTipoIdentificacion}"
-						var="identificacion" itemLabel="#{identificacion.descripcion}"
-						itemValue="#{identificacion.idIdentificacion}" />
-				</h:selectOneMenu>
-
-				<h:outputText value="Identificacion: " />
-				<h:inputText id="identificacion" size="40" maxlength="60"
-					value="#{userBean.identificacion}" required="true">
-				</h:inputText>
-
-				<h:outputText value="Nombre: " />
-				<h:inputText id="nombre" size="40" maxlength="60"
-					value="#{userBean.nombre}" required="true">
-					<p:ajax event="keyup" update="out"
-						listener="#{userBean.handleKeyEvent}" />
-				</h:inputText>
-
-				<h:outputText value="Apellidos: " />
-				<h:inputText id="apellido" size="40" maxlength="60"
-					value="#{userBean.apellido}" required="true">
-				</h:inputText>
-
-				<h:outputText value="Direccion: " />
-				<h:inputText id="direccion" size="40" maxlength="60"
-					value="#{userBean.direccion}" required="true">
-				</h:inputText>
-
-				<h:outputText value="Celular: " />
-				<h:inputText id="celular" size="40" maxlength="60"
-					value="#{userBean.celular}" required="true">
-				</h:inputText>
-
-				<h:outputText value="Email: " />
-				<h:inputText id="email" size="40" maxlength="60"
-					value="#{userBean.email}" required="true">
-				</h:inputText>
-			</h:panelGrid>
-			<br />
-
-
-			<p:commandButton value="enviar" id="send" update="growl"
-				action="#{userBean.buttonAction}" style="margin-right:20px;"
-				styleClass="ui-priority-primary" />
-		</p:fieldset>
-
-		<h:outputLabel id="out" value="#{userBean.nombre}" />
-	</h:form>
-
 	<h:form id="readUsers">
-		<p:growl id="msg" showDetail="true"/>
-		<p:fieldset legend="Usuarios" style="margin-bottom:20px">
-			<p:dataTable id="usersTable" var="user" value="#{userBean.lstUsers}" editable="true">
+		<p:growl id="msg" showDetail="true" />
+		
+			<p:dataTable id="usersTable" var="user" value="#{userBean.lstUsers}" editable="true" reflow="true" rows="5" paginator="true">
 				<p:ajax event="rowEdit" listener="#{userBean.onRowEdit}"
 					update=":readUsers:msg" />
 				<p:ajax event="rowEditCancel" listener="#{userBean.onRowCancel}"
 					update=":readUsers:msg" />
-				<p:column headerText="Tipo Identificacion">
+				<f:facet name="header">
+            		Usuarios
+        		</f:facet>
+				<p:column filterBy="#{user.tipoIdentificacion.getDescripcion()}" headerText="Tipo Identificacion">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{user.tipoIdentificacion.getDescripcion()}" />
@@ -92,7 +38,7 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Identificacion">
+				<p:column filterBy="#{user.identificacion}" headerText="Identificacion">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{user.identificacion}" />
@@ -106,7 +52,7 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Nombre">
+				<p:column filterBy="#{user.nombre}"  headerText="Nombre">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{user.nombre}" />
@@ -120,7 +66,7 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Apellido">
+				<p:column filterBy="#{user.apellido}" headerText="Apellido">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{user.apellido}" />
@@ -134,7 +80,7 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Direccion">
+				<p:column filterBy="#{user.direccion}" headerText="Direccion">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{user.direccion}" />
@@ -148,7 +94,7 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="celular">
+				<p:column filterBy="#{user.celular}" headerText="Celular">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{user.celular}" />
@@ -163,7 +109,7 @@
 
 				</p:column>
 
-				<p:column headerText="Email">
+				<p:column filterBy="#{user.email}" headerText="Email">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{user.email}" />
@@ -178,14 +124,98 @@
 				</p:column>
 
 				<p:column style="width:35px">
-					<p:rowEditor />
-					<p:commandButton action="#{userBean.deleteUser(user.idUsuario, user.nombre)}" id="delete" style="margin-right:20px;" icon="pi pi-times" title="Eliminar usuario" update=":readUsers:msg"/>
-				</p:column>
 
-				<p:ajax event="rowEdit" listener="#{userBean.updateUser(user)}" update="usersTable"/>
+					<p:rowEditor />
+					
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+						<p:commandButton value="Sí" type="button"
+							styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
+						<p:commandButton value="No" type="button"
+							styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+					</p:confirmDialog>
+					
+					<p:commandButton action="#{userBean.deleteUser(user.idUsuario, user.nombre)}"
+						id="delete" icon="pi pi-times" style="margin-right:20px;"
+						title="Eliminar usuario" update="readUsers:usersTable, readUsers:msg">
+						<p:confirm header="Confirmation" message="Estas seguro de eliminar a #{user.nombre} #{user.apellido} ? " icon="pi pi-exclamation-triangle" />
+					</p:commandButton>
+
+					
+				</p:column>
+				
+				<f:facet name="footer">
+					<center>
+            		<p:commandButton value="Añadir Usuario" onclick="PF('create').show()"
+						type="button" style="display:block;">
+						<i class="pi pi-plus"></i>
+					</p:commandButton>
+					</center>
+        		</f:facet>
+
+				<p:ajax event="rowEdit" listener="#{userBean.updateUser(user)}"
+					update="usersTable" />
 
 			</p:dataTable>
-		</p:fieldset>
+		
+		
+		</h:form>
+		<br/>
+		
+		<h:form id="createUser">
+		<!-- Formulario para crear un usuario  -->
+		<p:dialog header="Cajero" widgetVar="create" minHeight="40"
+			modal="true">
+			<p:growl id="msgUser" life="2000" />
+			<p:fieldset legend="Nuevo Usuario" style="margin-bottom:20px">
+				<h:panelGrid columns="2" cellpadding="5">
+					<h:outputLabel for="tipoIdentificacion"
+						value="Tipo Identificacion:" />
+					<h:selectOneMenu id="tipoIdentificacion"
+						value="#{userBean.tipoIdentificacion}" required="true">
+						<f:selectItems value="#{userBean.lstTipoIdentificacion}"
+							var="identificacion" itemLabel="#{identificacion.descripcion}"
+							itemValue="#{identificacion.idIdentificacion}" />
+					</h:selectOneMenu>
+
+					<h:outputText value="Identificacion: " />
+					<h:inputText id="identificacion" size="40" maxlength="60"
+						value="#{userBean.identificacion}" required="true">
+					</h:inputText>
+
+					<h:outputText value="Nombre: " />
+					<h:inputText id="nombre" size="40" maxlength="60"
+						value="#{userBean.nombre}" required="true">
+					</h:inputText>
+
+					<h:outputText value="Apellidos: " />
+					<h:inputText id="apellido" size="40" maxlength="60"
+						value="#{userBean.apellido}" required="true">
+					</h:inputText>
+
+					<h:outputText value="Direccion: " />
+					<h:inputText id="direccion" size="40" maxlength="60"
+						value="#{userBean.direccion}" required="true">
+					</h:inputText>
+
+					<h:outputText value="Celular: " />
+					<h:inputText id="celular" size="40" maxlength="60"
+						value="#{userBean.celular}" required="true">
+					</h:inputText>
+
+					<h:outputText value="Email: " />
+					<h:inputText id="email" size="40" maxlength="60"
+						value="#{userBean.email}" required="true">
+					</h:inputText>
+				</h:panelGrid>
+				<br />
+
+
+				<p:commandButton value="Crear Usuario" id="send"
+					update="msgUser"
+					action="#{userBean.buttonCreateUser}" style="margin-right:20px;"
+					styleClass="ui-priority-primary" onclick="PF('create').close()"/>
+			</p:fieldset>
+		</p:dialog>
 	</h:form>
 </h:body>
 </html>

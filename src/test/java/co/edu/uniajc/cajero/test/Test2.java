@@ -34,9 +34,9 @@ public class Test2 {
 	     System.out.println(UsuarioService.findByIdall());
 
 		   System.out.println(UsuarioService.findByIdall());
-		//UsuarioService.save(new Usuario(tipoIdentificacion, "98574", "prueba", "prueba", "carrera 7", "31525", "buitrago500",date1,date1));
-		UsuarioService.update(new Usuario(tipoIdentificacion, "98574", "pruebaaa", "prueba", "carrera 7", "31525", "buitrago500",date1,date1));
-		//UsuarioService.delete(2);
+		UsuarioService.save(new Usuario(tipoIdentificacion, "98574", "prueba", "prueba", "carrera 7", "31525", "buitrago500",date1,date1));
+		UsuarioService.update(new Usuario(tipoIdentificacion, "98574", "prueba", "prueba", "carrera 7", "31525", "buitrago500",date1,date1));
+		UsuarioService.delete(2);
 		UsuarioService.closeSession();
 		 
 	

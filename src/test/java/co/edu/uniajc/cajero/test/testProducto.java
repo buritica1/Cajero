@@ -18,9 +18,9 @@ public class testProducto {
 		
 		System.out.println(ProductoService.findByIdall());
 		
-		//ProductoService.save(new Producto("Productos"));
-		//ProductoService.update();
-		//ProductoService.delete(5);
+		//ProductoService.save(new Producto("Productos Bancarios"));
+		//ProductoService.Update(2, "Producto Credito");
+		//ProductoService.Delete(3);
 		
 		ProductoService.closeSession();
 	}

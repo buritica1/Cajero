@@ -9,7 +9,7 @@ public interface ProductoDao {
 	public void save(Producto producto);
 	public Producto findById(int id);
 	public List<Producto> findByall();
-	public Producto Update(Producto p);
-	public Producto delete(int id);	
+	public Producto Update(int id, String desc);
+	public Producto Delete(int id);	
 
 }

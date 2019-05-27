@@ -11,8 +11,8 @@ public interface TipoIdentificacionDao {
 	public void save(TipoIdentificacion TipoIdentificacion);
 	public TipoIdentificacion findById(int id);
 	public List<TipoIdentificacion> findByIdall();
-	public TipoIdentificacion Update(TipoIdentificacion tp);
-	public TipoIdentificacion delete(int id);
+	public TipoIdentificacion Update(int id ,String desc);
+	public TipoIdentificacion Delete(int id);
 	
 
 }

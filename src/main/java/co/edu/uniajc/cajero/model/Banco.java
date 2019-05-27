@@ -34,16 +34,14 @@ public class Banco implements java.io.Serializable {
 		this.nit = nit;
 		this.nombre = nombre;
 	}
-	
-	public Banco(String string, int i, String string2) {
-	}
 
 	public Banco(String nit, String nombre, String direccion, String telefono) {
 		this.nit = nit;
 		this.nombre = nombre;
 		this.direccion = direccion;
 		this.telefono = telefono;
-	
+	//	this.cuentas = cuentas;
+	//	this.cajeros = cajeros;
 	}
 
 	public Integer getIdBanco() {
@@ -86,5 +84,20 @@ public class Banco implements java.io.Serializable {
 		this.telefono = telefono;
 	}
 
+	//public Set getCuentas() {
+		//return this.cuentas;
+	//}
+
+	//public void setCuentas(Set cuentas) {
+	//	this.cuentas = cuentas;
+	//}
+
+	//public Set getCajeros() {
+	//	return this.cajeros;
+	//}
+
+//	public void setCajeros(Set cajeros) {
+//		this.cajeros = cajeros;
+//	}
 
 }

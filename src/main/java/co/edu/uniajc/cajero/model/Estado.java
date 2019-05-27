@@ -1,9 +1,6 @@
 package co.edu.uniajc.cajero.model;
 // Generated 7/04/2019 01:08:10 PM by Hibernate Tools 5.2.12.Final
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,10 +31,7 @@ public class Estado implements java.io.Serializable {
 	public Estado(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	
-	public Estado(String string, int i, String string2) {
-	}
-	
+
 	public Integer getIdEstado() {
 		return this.idEstado;
 	}
@@ -54,6 +48,9 @@ public class Estado implements java.io.Serializable {
 		this.descripcion = descripcion;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return "Estado [id_Estado=" + idEstado + ", descripcion=" + descripcion + "]";
+	}
 
 }

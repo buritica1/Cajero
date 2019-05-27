@@ -56,9 +56,6 @@ public class UserBean {
 		this.getLstUsers(session);	
 	}
 	
-	public void handleKeyEvent() {
-        nombre = nombre.toUpperCase();
-    }
 	
 	// Metodo que consulta los registros de la tabla tipo identificacion
 	public void getLstTipoIdentificacion(Session session) {
@@ -94,9 +91,11 @@ public class UserBean {
 	
 	
 	// Metodo que envía los datos del usuario a crear
-	public void buttonAction() throws ParseException {
+	public void buttonCreateUser() throws ParseException {
 		this.createUser();
+		this.getLstUsers();
 		addMessage("Datos de usuario enviados!! tipo identificacion: " + tipoIdentificacion + " | identificacion:  " + identificacion + " | nombre: " + nombre + " | apellido: " + apellido + " | direccion: " + direccion + " | celular: " + celular + " | email: " + email);
+		this.cleanVariables();
     }
 	
 	
@@ -104,18 +103,38 @@ public class UserBean {
 	public void createUser() {
 		try {
 			
-			TipoIdentificacion tipoId = new TipoIdentificacion(tipoIdentificacion); // Se obtiene el id del tipo de identificacion que se seleccionó en el formulario
-			
 			Session session = HibernateUtil.getSessionFactory().openSession();
+			
+			TipoIdentificacionService TipoIdentificacionService = new TipoIdentificacionService(session);
+			TipoIdentificacionService = new TipoIdentificacionService(session);
+			TipoIdentificacion tipoId = TipoIdentificacionService.findById(tipoIdentificacion); // Se obtiene el id del tipo de identificacion que se seleccionó en el formulario
+			
 			UsuarioService usuarioService = new UsuarioService(session);
 			usuarioService = new UsuarioService(session);
 			usuarioService.save(new Usuario(tipoId, identificacion, nombre, apellido, direccion, celular, email, new Date(), new Date()));
+			lstUsers = usuarioService.findByIdall();
+			
+			TipoIdentificacionService.closeSession();
 			usuarioService.closeSession();
 		} catch (Exception e) {
 			System.out.println("Error createUser(): " + e.toString());
 		}
 	}
 	
+	
+	// Metodo que limpia las variables utilizadas de la vista
+	private void cleanVariables() {
+		tipoIdentificacion = 0;
+		identificacion = "";
+		nombre="";
+		apellido="";
+		direccion="";
+		celular="";
+		email="";
+		
+		this.getLstTipoIdentificacion();
+		this.getLstUsers();
+	}
 	
 	public void onRowEdit(RowEditEvent event) {
         FacesMessage msg = new FacesMessage("Usuario Editado", ((Usuario) event.getObject()).getNombre());
@@ -135,8 +154,15 @@ public class UserBean {
 		
 		UsuarioService usuarioService = new UsuarioService(session);
 		usuarioService = new UsuarioService(session);
+		
+		TipoIdentificacionService TipoIdentificacionService = new TipoIdentificacionService(session);
+		TipoIdentificacionService = new TipoIdentificacionService(session);
+		TipoIdentificacionService.closeSession();
+		
+		u.setTipoIdentificacion(TipoIdentificacionService.findById(tipoIdentificacion));
 		u.setFecActualiza(new Date());
 		Usuario usuarioActualizado = usuarioService.update(u);
+		lstUsers = usuarioService.findByIdall();
 		usuarioService.closeSession();
 		
 		System.out.println("Usuario actualizado: nombre: " + usuarioActualizado.getNombre() + " Apellido: " + usuarioActualizado.getApellido());

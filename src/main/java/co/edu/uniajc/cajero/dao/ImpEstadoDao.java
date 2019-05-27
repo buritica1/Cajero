@@ -7,10 +7,10 @@ import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
 
+import org.hibernate.Session;
+
+import org.hibernate.Transaction;
 import co.edu.uniajc.cajero.model.Estado;
 import co.edu.uniajc.cajero.model.Estado_;
 
@@ -115,58 +115,77 @@ public class ImpEstadoDao implements EstadoDao   {
 	}
 
 	@Override
-	public Estado Update(Estado E) {
+	public Estado Update(int id,String desc) {
 		Transaction tx = null;
 		Estado Estado = null;
 		try {
 			tx = session.beginTransaction();
 			
+			 
 			CriteriaBuilder builder = session.getCriteriaBuilder();
 			CriteriaQuery<Estado> criteria = builder.createQuery(Estado.class);
 			
+
 			Root<Estado> root = criteria.from(Estado.class);
+			
 			
 			criteria.select(root);
 			criteria.where(
-					builder.equal(root.get(Estado_.idEstado), E.getIdEstado())
+					builder.equal(root.get(Estado_.idEstado), id)
 					);
+			
 			Estado = session.createQuery(criteria).getSingleResult();
 			
-			Estado.setDescripcion(E.getDescripcion());
+			//Update		
+			Estado.setDescripcion(desc);
 			session.update(Estado);
 			
 			tx.commit();
-		}
+		} 
 		catch (Exception e) {
-			if(tx != null) {
+			if(tx != null){
 				tx.rollback();
 			}
 			e.printStackTrace();
 		}
 		return Estado;
 	}
-	
+
 	@Override
 	public Estado Delete(int id) {
-		// TODO Auto-generated method stub
 		Transaction tx = null;
 		Estado Estado = null;
 		try {
 			tx = session.beginTransaction();
 			
-			Estado E = (Estado ) session.createCriteria(Estado.class)
-					.add(Restrictions.eq("idEstado", id)).uniqueResult();
-			session.delete(E);
 			
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaQuery<Estado> criteria = builder.createQuery(Estado.class);
+			
+			
+			Root<Estado> root = criteria.from(Estado.class);
+			
+			
+			criteria.select(root);
+			criteria.where(
+					builder.equal(root.get(Estado_.idEstado), id)
+					);
+			
+			Estado = session.createQuery(criteria).getSingleResult();
+			
+			// Delete 
+			Estado.setIdEstado(id);			
+			session.delete(Estado);
+		 		       
 			tx.commit();
-		}
+		} 
 		catch (Exception e) {
-			if(tx != null) {
+			if(tx != null){
 				tx.rollback();
 			}
-			e.printStackTrace();			
+			e.printStackTrace();
 		}
-		return Estado;
+		return Estado ;
 	}
 
 	public void closeSession() {
