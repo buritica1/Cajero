@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 7/04/2019 01:08:10 PM by Hibernate Tools 5.2.12.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="atm" dynamic-insert="false" dynamic-update="false" mutable="true" name="co.edu.uniajc.cajero.model.Detalle" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="detalle">
+        <composite-id class="co.edu.uniajc.cajero.model.DetalleId" mapped="false" name="id" unsaved-value="undefined">
+            <key-property name="idDetalle" type="int">
+                <column name="id_detalle"/>
+            </key-property>
+            <key-property name="idTransaccion" type="int">
+                <column name="id_transaccion"/>
+            </key-property>
+        </composite-id>
+        <many-to-one class="co.edu.uniajc.cajero.model.Cuenta" embed-xml="true" fetch="select" insert="true" name="cuenta" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="id_cuenta" not-null="true"/>
+        </many-to-one>
+        <many-to-one class="co.edu.uniajc.cajero.model.Movimiento" embed-xml="true" fetch="select" insert="true" name="movimiento" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="id_movimiento" not-null="true"/>
+        </many-to-one>
+        <many-to-one class="co.edu.uniajc.cajero.model.Tarjeta" embed-xml="true" fetch="select" insert="true" name="tarjeta" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="id_tarjeta"/>
+        </many-to-one>
+        <many-to-one class="co.edu.uniajc.cajero.model.Transaccion" embed-xml="true" fetch="select" insert="false" name="transaccion" not-found="exception" optimistic-lock="true" unique="false" update="false">
+            <column name="id_transaccion" not-null="true"/>
+        </many-to-one>
+        <property generated="never" lazy="false" name="monto" optimistic-lock="true" type="big_decimal" unique="false">
+            <column name="monto" precision="12"/>
+        </property>
+    </class>
+</hibernate-mapping>

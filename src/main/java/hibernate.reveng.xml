@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.org/dtd/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+  <table-filter match-catalog="atm" match-name="banco"/>
+  <table-filter match-catalog="atm" match-name="cajero"/>
+  <table-filter match-catalog="atm" match-name="cuenta"/>
+  <table-filter match-catalog="atm" match-name="detalle"/>
+  <table-filter match-catalog="atm" match-name="estado"/>
+  <table-filter match-catalog="atm" match-name="movimiento"/>
+  <table-filter match-catalog="atm" match-name="producto"/>
+  <table-filter match-catalog="atm" match-name="tarjeta"/>
+  <table-filter match-catalog="atm" match-name="tipo_identificacion"/>
+  <table-filter match-catalog="atm" match-name="transaccion"/>
+  <table-filter match-catalog="atm" match-name="usuario"/>
+</hibernate-reverse-engineering>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 7/04/2019 01:08:10 PM by Hibernate Tools 5.2.12.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="atm" dynamic-insert="false" dynamic-update="false" mutable="true" name="co.edu.uniajc.cajero.model.Tarjeta" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="tarjeta">
+        <id name="idTarjeta" type="java.lang.Integer">
+            <column name="id_tarjeta"/>
+            <generator class="identity"/>
+        </id>
+        <many-to-one class="co.edu.uniajc.cajero.model.Cuenta" embed-xml="true" fetch="select" insert="true" name="cuenta" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="id_cuenta" not-null="true"/>
+        </many-to-one>
+        <many-to-one class="co.edu.uniajc.cajero.model.Estado" embed-xml="true" fetch="select" insert="true" name="estado" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="id_estado" not-null="true"/>
+        </many-to-one>
+        <property generated="never" lazy="false" name="numero" optimistic-lock="true" type="string" unique="false">
+            <column length="45" name="numero" not-null="true" unique="true"/>
+        </property>
+        <property generated="never" lazy="false" name="validthru" optimistic-lock="true" type="date" unique="false">
+            <column length="10" name="validthru" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="indBlock" optimistic-lock="true" type="int" unique="false">
+            <column name="ind_block" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="clave" optimistic-lock="true" type="string" unique="false">
+            <column length="45" name="clave" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="fecCreacion" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="fec_creacion"/>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="detalles" optimistic-lock="true" sort="unsorted" table="detalle">
+            <key on-delete="noaction">
+                <column name="id_tarjeta"/>
+            </key>
+            <one-to-many class="co.edu.uniajc.cajero.model.Detalle" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>

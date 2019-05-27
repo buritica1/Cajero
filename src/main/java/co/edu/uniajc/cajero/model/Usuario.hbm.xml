@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 7/04/2019 01:08:10 PM by Hibernate Tools 5.2.12.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="atm" dynamic-insert="false" dynamic-update="false" mutable="true" name="co.edu.uniajc.cajero.model.Usuario" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="usuario">
+        <id name="idUsuario" type="java.lang.Integer">
+            <column name="id_usuario"/>
+            <generator class="identity"/>
+        </id>
+        <many-to-one class="co.edu.uniajc.cajero.model.TipoIdentificacion" embed-xml="true" fetch="select" insert="true" name="tipoIdentificacion" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="tipo_identificacion" not-null="true"/>
+        </many-to-one>
+        <property generated="never" lazy="false" name="identificacion" optimistic-lock="true" type="string" unique="false">
+            <column length="15" name="identificacion" unique="true"/>
+        </property>
+        <property generated="never" lazy="false" name="nombre" optimistic-lock="true" type="string" unique="false">
+            <column length="45" name="nombre"/>
+        </property>
+        <property generated="never" lazy="false" name="apellido" optimistic-lock="true" type="string" unique="false">
+            <column length="45" name="apellido"/>
+        </property>
+        <property generated="never" lazy="false" name="direccion" optimistic-lock="true" type="string" unique="false">
+            <column length="45" name="direccion"/>
+        </property>
+        <property generated="never" lazy="false" name="celular" optimistic-lock="true" type="string" unique="false">
+            <column length="10" name="celular"/>
+        </property>
+        <property generated="never" lazy="false" name="email" optimistic-lock="true" type="string" unique="false">
+            <column length="45" name="email"/>
+        </property>
+        <property generated="never" lazy="false" name="fecCreacion" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="fec_creacion"/>
+        </property>
+        <property generated="never" lazy="false" name="fecActualiza" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="fec_actualiza"/>
+        </property>
+        </class>
+</hibernate-mapping>

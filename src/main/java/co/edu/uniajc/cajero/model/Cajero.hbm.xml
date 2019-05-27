@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 7/04/2019 01:08:10 PM by Hibernate Tools 5.2.12.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="atm" dynamic-insert="false" dynamic-update="false" mutable="true" name="co.edu.uniajc.cajero.model.Cajero" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="cajero">
+        <id name="idCajero" type="java.lang.Integer">
+            <column name="id_cajero"/>
+            <generator class="identity"/>
+        </id>
+        <many-to-one class="co.edu.uniajc.cajero.model.Banco" embed-xml="true" fetch="select" insert="true" name="banco" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="id_banco" not-null="true"/>
+        </many-to-one>
+        <property generated="never" lazy="false" name="saldo" optimistic-lock="true" type="big_decimal" unique="false">
+            <column name="saldo" not-null="true" precision="12"/>
+        </property>
+        <property generated="never" lazy="false" name="ubicacion" optimistic-lock="true" type="string" unique="false">
+            <column length="45" name="ubicacion"/>
+        </property>
+        <property generated="never" lazy="false" name="indServicio" optimistic-lock="true" type="int" unique="false">
+            <column name="ind_servicio" not-null="true"/>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="transaccions" optimistic-lock="true" sort="unsorted" table="transaccion">
+            <key on-delete="noaction">
+                <column name="id_cajero" not-null="true"/>
+            </key>
+            <one-to-many class="co.edu.uniajc.cajero.model.Transaccion" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>

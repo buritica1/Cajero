@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+                                         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+ <session-factory name="">
+  <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+  <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/atm</property>
+  <property name="hibernate.connection.username">root</property>
+  <property name="hibernate.default_schema">atm</property>
+  <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+  <property name="hibernate.show_sql">true</property>
+  <property name="hibernate.current_session_context_class">thread</property>
+  
+  <!-- Use mapping basado en XML-->	
+  <!--         <mapping resource="com/novellius/domain/Tramite.hbm.xml"/> -->
+        
+  <!-- Usar mapping en base a anotaciones-->
+    <mapping class="co.edu.uniajc.cajero.model.TipoIdentificacion"/>
+   <mapping class="co.edu.uniajc.cajero.model.Banco"/>
+   <mapping class="co.edu.uniajc.cajero.model.Usuario"/>
+   <mapping class="co.edu.uniajc.cajero.model.Transaccion"/>
+   <mapping class="co.edu.uniajc.cajero.model.Tarjeta"/>
+   <mapping class="co.edu.uniajc.cajero.model.Producto"/>
+   <mapping class="co.edu.uniajc.cajero.model.Movimiento"/>
+   <mapping class="co.edu.uniajc.cajero.model.Estado"/>
+   <mapping class="co.edu.uniajc.cajero.model.Detalle"/>
+   <mapping class="co.edu.uniajc.cajero.model.DetalleId"/>
+   <mapping class="co.edu.uniajc.cajero.model.Cuenta"/>
+   <mapping class="co.edu.uniajc.cajero.model.Cajero"/>
+
+ </session-factory>
+</hibernate-configuration>

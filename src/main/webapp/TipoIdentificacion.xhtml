@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+<h:body>
+	<h2>Create Tipo Identificacion</h2>
+
+	<h:form>
+		<p:growl id="growl" life="2000" />
+		<p:fieldset legend="Tipo Identificacion" style="margin-bottom:20px">
+			<h:outputText value="Descripcion: " />
+			<h:inputText id="descripcion" size="40" maxlength="60"
+				value="#{tipoIdentificacionBean.descripcion}">
+			</h:inputText>
+			
+			<p:commandButton value="enviar" id="send" update="growl"
+				action="#{tipoIdentificacionBean.buttonAction}" style="margin-right:20px;"
+				styleClass="ui-priority-primary" />
+		</p:fieldset>
+	</h:form>
+	
+	<h:form>
+		<p:commandButton value="Mostrar" actionListener="#{tipoIdentificacionBean.listar()}" update="table" />
+				
+    <p:dataTable  id="table" value="#{tipoIdentificacionBean.lista}"  var="p">
+       <p:column headerText="id">
+           <h:outputText value="#{p.idIdentificacion}" />
+       </p:column>
+        <p:column headerText="Descripcion">
+           <h:outputText value="#{p.descripcion}" />
+       </p:column>
+       
+    </p:dataTable>
+   </h:form>
+
+</h:body>
+</html>

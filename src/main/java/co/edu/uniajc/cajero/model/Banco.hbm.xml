@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 7/04/2019 01:08:10 PM by Hibernate Tools 5.2.12.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="atm" dynamic-insert="false" dynamic-update="false" mutable="true" name="co.edu.uniajc.cajero.model.Banco" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="banco">
+        <id name="idBanco" type="java.lang.Integer">
+            <column name="id_banco"/>
+            <generator class="identity"/>
+        </id>
+        <property generated="never" lazy="false" name="nit" optimistic-lock="true" type="string" unique="false">
+            <column length="45" name="nit" not-null="true" unique="true"/>
+        </property>
+        <property generated="never" lazy="false" name="nombre" optimistic-lock="true" type="string" unique="false">
+            <column length="45" name="nombre" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="direccion" optimistic-lock="true" type="string" unique="false">
+            <column length="45" name="direccion"/>
+        </property>
+        <property generated="never" lazy="false" name="telefono" optimistic-lock="true" type="string" unique="false">
+            <column length="10" name="telefono"/>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="cuentas" optimistic-lock="true" sort="unsorted" table="cuenta">
+            <key on-delete="noaction">
+                <column name="id_banco" not-null="true"/>
+            </key>
+            <one-to-many class="co.edu.uniajc.cajero.model.Cuenta" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="cajeros" optimistic-lock="true" sort="unsorted" table="cajero">
+            <key on-delete="noaction">
+                <column name="id_banco" not-null="true"/>
+            </key>
+            <one-to-many class="co.edu.uniajc.cajero.model.Cajero" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>

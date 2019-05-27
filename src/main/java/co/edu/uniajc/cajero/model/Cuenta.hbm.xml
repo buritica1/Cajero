@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 7/04/2019 01:08:10 PM by Hibernate Tools 5.2.12.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="atm" dynamic-insert="false" dynamic-update="false" mutable="true" name="co.edu.uniajc.cajero.model.Cuenta" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="cuenta">
+        <id name="idCuenta" type="java.lang.Integer">
+            <column name="id_cuenta"/>
+            <generator class="identity"/>
+        </id>
+        <many-to-one class="co.edu.uniajc.cajero.model.Banco" embed-xml="true" fetch="select" insert="true" name="banco" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="id_banco" not-null="true"/>
+        </many-to-one>
+        <many-to-one class="co.edu.uniajc.cajero.model.Estado" embed-xml="true" fetch="select" insert="true" name="estado" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="id_estado" not-null="true"/>
+        </many-to-one>
+        <many-to-one class="co.edu.uniajc.cajero.model.Producto" embed-xml="true" fetch="select" insert="true" name="producto" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="id_producto" not-null="true"/>
+        </many-to-one>
+        <many-to-one class="co.edu.uniajc.cajero.model.Usuario" embed-xml="true" fetch="select" insert="true" name="usuario" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="id_usuario" not-null="true"/>
+        </many-to-one>
+        <property generated="never" lazy="false" name="numero" optimistic-lock="true" type="string" unique="false">
+            <column length="45" name="numero" not-null="true" unique="true"/>
+        </property>
+        <property generated="never" lazy="false" name="saldo" optimistic-lock="true" type="big_decimal" unique="false">
+            <column name="saldo" not-null="true" precision="12"/>
+        </property>
+        <property generated="never" lazy="false" name="clave" optimistic-lock="true" type="string" unique="false">
+            <column length="45" name="clave" not-null="true"/>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="detalles" optimistic-lock="true" sort="unsorted" table="detalle">
+            <key on-delete="noaction">
+                <column name="id_cuenta" not-null="true"/>
+            </key>
+            <one-to-many class="co.edu.uniajc.cajero.model.Detalle" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="tarjetas" optimistic-lock="true" sort="unsorted" table="tarjeta">
+            <key on-delete="noaction">
+                <column name="id_cuenta" not-null="true"/>
+            </key>
+            <one-to-many class="co.edu.uniajc.cajero.model.Tarjeta" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+<h:body>
+	<h:form>
+		<p:growl id="growl" life="2000" />
+		<p:fieldset legend="Tipo de movimiento" style="margin-bottom:20px">
+		   <h:panelGrid columns="2" cellpadding="5">
+			   <h:outputText value="Descripcion: " />
+			   <h:inputText id="Descripcion" size="40" maxlength="60"
+				   value="#{movimientoBean.descripcion}" required="true">
+			       <p:ajax event="keyup" update="out"
+						listener="#{movimientoBean.handleKeyEvent}" />
+				</h:inputText>
+			</h:panelGrid>
+			<br />
+			
+			<p:commandButton value="enviar" id="send" update="growl"
+				action="#{movimientoBean.buttonAction}" style="margin-right:20px;"
+				styleClass="ui-priority-primary" />
+		</p:fieldset>
+		<h:outputLabel id="out" value="#{movimientoBean.descripcion}" />
+	</h:form>
+	
+	<h:form id="readMovimientos">
+		<p:growl id="msg" showDetail="true" />
+		<p:fieldset legend="Movimiento" style="margin-bottom:20px">
+			<p:dataTable id="MovimientoTable" var="movim"
+				value="#{movimientoBean.lstMovimientos}" editable="true">
+				<p:ajax event="rowEdit" listener="#{movimientoBean.onRowEdit}"
+					update=":readMovimientos:msg" />
+				<p:ajax event="rowEditCancel" listener="#{movimientoBean.onRowCancel}"
+					update=":readMovimientos:msg" />
+
+				<p:column headerText="Descripcion">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{movim.descripcion}" />
+						</f:facet>
+
+						<f:facet name="input">
+							<p:inputText id="descripcion" size="40" maxlength="60"
+								value="#{movim.descripcion}" required="true">
+							</p:inputText>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column style="width:35px">
+					<p:rowEditor />
+					<p:commandButton
+						action="#{movimientoBean.deleteMovimiento(movim.idMovimiento, movim.descripcion)}"
+						id="delete" style="margin-right:20px;" icon="pi pi-times"
+						title="Eliminar Movimiento" update=":readMovimientos:msg" />
+				</p:column>
+
+				<p:ajax event="rowEdit"
+					listener="#{movimientoBean.updateMovimiento(movim)}"
+					update="MovimientoTable" />
+
+			</p:dataTable>
+		</p:fieldset>
+	</h:form>
+</h:body>
+</html>

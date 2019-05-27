@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+<h:body>
+	<h2>View Banco</h2>
+
+	<h:form>
+		<p:growl id="growl" life="2000" />
+		<p:fieldset legend="BANCO" style="margin-bottom:20px">
+			<h:panelGrid columns="2" cellpadding="5">
+				<h:outputText value="nit: " />
+				<h:inputText id="nit" size="40" maxlength="60"
+					value="#{bancoBean.nit}">
+				</h:inputText>
+
+				<h:outputText value="Nombre: " />
+				<h:inputText id="nombre" size="40" maxlength="60"
+					value="#{bancoBean.nombre}">
+					
+				</h:inputText>
+				
+				
+				
+				<h:outputText value="direccion: " />
+				<h:inputText id="direccion" size="40" maxlength="60"
+					value="#{bancoBean.direccion}">
+				</h:inputText>
+				
+				<h:outputText value="telefono: " />
+				<h:inputText id="telefono" size="40" maxlength="60"
+					value="#{bancoBean.telefono}">
+				</h:inputText>
+				</h:panelGrid>
+			
+			<br />
+
+
+			<p:commandButton value="enviar" id="send" update="growl"
+				action="#{bancoBean.buttonAction}" style="margin-right:20px;"
+				styleClass="ui-priority-primary" />
+		</p:fieldset>
+
+		<!-- <h:outputLabel id="out" value="#{bancoBean.nit}" />-->
+	</h:form>
+
+
+	<h:form>
+		<p:commandButton value="Mostrar" actionListener="#{bancoBean.listar()}" update="table" />
+				
+    <p:dataTable  id="table" value="#{bancoBean.lista}"  var="p">
+       <p:column headerText="id">
+           <h:outputText value="#{p.idBanco}" />
+       </p:column>
+        <p:column headerText="direccion">
+           <h:outputText value="#{p.direccion}" />
+       </p:column>
+        <p:column headerText="nit">
+           <h:outputText value="#{p.nit}" />
+       </p:column>
+        <p:column headerText="nombre">
+           <h:outputText value="#{p.nombre}" />
+       </p:column>
+        <p:column headerText="telefono">
+           <h:outputText value="#{p.telefono}" />
+       </p:column>
+       
+    </p:dataTable>
+   </h:form>
+
+	<!-- 		<h:form> -->
+	<!--             User: <h:inputText id="user" size="40" maxlength="60" -->
+	<!-- 				value="#{userManagedBean.user}" /> -->
+	<!-- 			<br /> -->
+	<!--             Nick name: <h:inputText id="nickName" size="40" -->
+	<!-- 				maxlength="60" value="#{userManagedBean.nickName}" /> -->
+	<!-- 			<br /> -->
+	<!--             Email: <h:inputText id="email" size="40" maxlength="60" -->
+	<!-- 				value="#{userManagedBean.email}" /> -->
+	<!-- 			<br /> -->
+	<!--             Validation Code:<h:inputText id="validationCode" size="40" -->
+	<!-- 				maxlength="60" value="#{userManagedBean.validationCode}" /> -->
+	<!-- 			<br /> -->
+	<!--             The validation code is necesary to validate the user<br /> -->
+	<!--             (El código de validación es necesario para validad el usuario)<br /> -->
+	<!-- 			<h:commandButton id="submit" value="SUBMIT" action="validation" /> -->
+	<!-- 		</h:form> -->
+
+</h:body>
+</html>

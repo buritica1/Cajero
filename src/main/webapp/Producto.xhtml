@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+<h:body>
+	<h:form>
+		<p:growl id="growl" life="2000" />
+		<p:fieldset legend="Crear Producto" style="margin-bottom:20px">
+			<h:panelGrid columns="2" cellpadding="5">
+				<h:outputText value="Descripcion: " />
+				<h:inputText id="Descripcion" size="40" maxlength="60"
+					value="#{productoBean.descripcion}" required="true">
+					<p:ajax event="keyup" update="out"
+						listener="#{productoBean.handleKeyEvent}" />
+				</h:inputText>
+			</h:panelGrid>
+			<br />
+
+			<p:commandButton value="enviar" id="send" update="growl"
+				action="#{productoBean.buttonAction}" style="margin-right:20px;"
+				styleClass="ui-priority-primary" />
+		</p:fieldset>
+		<h:outputLabel id="out" value="#{productoBean.descripcion}" />
+	</h:form>
+
+	<h:form id="readProductos">
+		<p:growl id="msg" showDetail="true" />
+		<p:fieldset legend="Producto" style="margin-bottom:20px">
+			<p:dataTable id="ProductoTable" var="prod"
+				value="#{productoBean.lstProductos}" editable="true">
+				<p:ajax event="rowEdit" listener="#{productoBean.onRowEdit}"
+					update=":readProductos:msg" />
+				<p:ajax event="rowEditCancel" listener="#{productoBean.onRowCancel}"
+					update=":readProductos:msg" />
+
+				<p:column headerText="Descripcion">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{prod.descripcion}" />
+						</f:facet>
+
+						<f:facet name="input">
+							<p:inputText id="descripcion" size="40" maxlength="60"
+								value="#{prod.descripcion}" required="true">
+							</p:inputText>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column style="width:35px">
+					<p:rowEditor />
+					<p:commandButton
+						action="#{productoBean.deleteProducto(prod.idProducto, prod.descripcion)}"
+						id="delete" style="margin-right:20px;" icon="pi pi-times"
+						title="Eliminar Producto" update=":readProductos:msg" />
+				</p:column>
+
+				<p:ajax event="rowEdit"
+					listener="#{productoBean.updateProducto(prod)}"
+					update="ProductoTable" />
+
+			</p:dataTable>
+		</p:fieldset>
+	</h:form>
+</h:body>
+</html>

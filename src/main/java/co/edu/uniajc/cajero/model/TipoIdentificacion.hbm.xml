@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 7/04/2019 01:08:10 PM by Hibernate Tools 5.2.12.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="atm" dynamic-insert="false" dynamic-update="false" mutable="true" name="co.edu.uniajc.cajero.model.TipoIdentificacion" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="tipo_identificacion">
+        <id name="idIdentificacion" type="java.lang.Integer">
+            <column name="id_identificacion"/>
+            <generator class="native"/>
+        </id>
+        <property generated="never" lazy="false" name="descripcion" optimistic-lock="true" type="string" unique="false">
+            <column length="45" name="descripcion"/>
+        </property>
+        </class>
+</hibernate-mapping>

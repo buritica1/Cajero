@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+<h:body>
+	<h2>Create User</h2>
+
+	<h:form>
+		<p:growl id="growl" life="2000" />
+		<p:fieldset legend="Crear Usuario" style="margin-bottom:20px">
+			<h:panelGrid columns="2" cellpadding="5">
+				<h:outputLabel for="tipoIdentificacion" value="Tipo Identificacion:" />
+				<h:selectOneMenu id="tipoIdentificacion"
+					value="#{userBean.tipoIdentificacion}" required="true">
+					<f:selectItems value="#{userBean.lstTipoIdentificacion}"
+						var="identificacion" itemLabel="#{identificacion.descripcion}"
+						itemValue="#{identificacion.idIdentificacion}" />
+				</h:selectOneMenu>
+
+				<h:outputText value="Identificacion: " />
+				<h:inputText id="identificacion" size="40" maxlength="60"
+					value="#{userBean.identificacion}" required="true">
+				</h:inputText>
+
+				<h:outputText value="Nombre: " />
+				<h:inputText id="nombre" size="40" maxlength="60"
+					value="#{userBean.nombre}" required="true">
+					<p:ajax event="keyup" update="out"
+						listener="#{userBean.handleKeyEvent}" />
+				</h:inputText>
+
+				<h:outputText value="Apellidos: " />
+				<h:inputText id="apellido" size="40" maxlength="60"
+					value="#{userBean.apellido}" required="true">
+				</h:inputText>
+
+				<h:outputText value="Direccion: " />
+				<h:inputText id="direccion" size="40" maxlength="60"
+					value="#{userBean.direccion}" required="true">
+				</h:inputText>
+
+				<h:outputText value="Celular: " />
+				<h:inputText id="celular" size="40" maxlength="60"
+					value="#{userBean.celular}" required="true">
+				</h:inputText>
+
+				<h:outputText value="Email: " />
+				<h:inputText id="email" size="40" maxlength="60"
+					value="#{userBean.email}" required="true">
+				</h:inputText>
+			</h:panelGrid>
+			<br />
+
+
+			<p:commandButton value="enviar" id="send" update="growl"
+				action="#{userBean.buttonAction}" style="margin-right:20px;"
+				styleClass="ui-priority-primary" />
+		</p:fieldset>
+
+		<h:outputLabel id="out" value="#{userBean.nombre}" />
+	</h:form>
+
+	<h:form id="readUsers">
+		<p:growl id="msg" showDetail="true"/>
+		<p:fieldset legend="Usuarios" style="margin-bottom:20px">
+			<p:dataTable id="usersTable" var="user" value="#{userBean.lstUsers}" editable="true">
+				<p:ajax event="rowEdit" listener="#{userBean.onRowEdit}"
+					update=":readUsers:msg" />
+				<p:ajax event="rowEditCancel" listener="#{userBean.onRowCancel}"
+					update=":readUsers:msg" />
+				<p:column headerText="Tipo Identificacion">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{user.tipoIdentificacion.getDescripcion()}" />
+						</f:facet>
+
+						<f:facet name="input">
+							<h:selectOneMenu id="tipoIdentificacion"
+								value="#{userBean.tipoIdentificacion}" required="true">
+								<f:selectItems value="#{userBean.lstTipoIdentificacion}"
+									var="identificacion" itemLabel="#{identificacion.descripcion}"
+									itemValue="#{identificacion.idIdentificacion}" />
+							</h:selectOneMenu>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Identificacion">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{user.identificacion}" />
+						</f:facet>
+
+						<f:facet name="input">
+							<p:inputText id="identificacion" size="40" maxlength="60"
+								value="#{user.identificacion}" required="true">
+							</p:inputText>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Nombre">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{user.nombre}" />
+						</f:facet>
+
+						<f:facet name="input">
+							<p:inputText id="nombre" size="40" maxlength="60"
+								value="#{user.nombre}" required="true">
+							</p:inputText>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Apellido">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{user.apellido}" />
+						</f:facet>
+
+						<f:facet name="input">
+							<p:inputText id="apellido" size="40" maxlength="60"
+								value="#{user.apellido}" required="true">
+							</p:inputText>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Direccion">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{user.direccion}" />
+						</f:facet>
+
+						<f:facet name="input">
+							<h:inputText id="direccion" size="40" maxlength="60"
+								value="#{user.direccion}" required="true">
+							</h:inputText>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="celular">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{user.celular}" />
+						</f:facet>
+
+						<f:facet name="input">
+							<h:inputText id="celular" size="40" maxlength="60"
+								value="#{user.celular}" required="true">
+							</h:inputText>
+						</f:facet>
+					</p:cellEditor>
+
+				</p:column>
+
+				<p:column headerText="Email">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{user.email}" />
+						</f:facet>
+
+						<f:facet name="input">
+							<h:inputText id="email" size="40" maxlength="60"
+								value="#{user.email}" required="true">
+							</h:inputText>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column style="width:35px">
+					<p:rowEditor />
+					<p:commandButton action="#{userBean.deleteUser(user.idUsuario, user.nombre)}" id="delete" style="margin-right:20px;" icon="pi pi-times" title="Eliminar usuario" update=":readUsers:msg"/>
+				</p:column>
+
+				<p:ajax event="rowEdit" listener="#{userBean.updateUser(user)}" update="usersTable"/>
+
+			</p:dataTable>
+		</p:fieldset>
+	</h:form>
+</h:body>
+</html>
