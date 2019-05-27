@@ -8,6 +8,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
+
 import co.edu.uniajc.cajero.model.TipoIdentificacion;
 import co.edu.uniajc.cajero.model.TipoIdentificacion_;
 
@@ -112,7 +114,7 @@ public class ImpTipoIdentificacionDao implements TipoIdentificacionDao   {
 	}
 
 	@Override
-	public TipoIdentificacion Update(int id,String desc) {
+	public TipoIdentificacion Update(TipoIdentificacion tp) {
 		Transaction tx = null;
 		TipoIdentificacion Tipoidentificacion = null;
 		try {
@@ -128,13 +130,13 @@ public class ImpTipoIdentificacionDao implements TipoIdentificacionDao   {
 			//construyendo la consulta 
 			criteria.select(root);
 			criteria.where(
-					builder.equal(root.get(TipoIdentificacion_.idIdentificacion), id)
+					builder.equal(root.get(TipoIdentificacion_.idIdentificacion), tp.getIdIdentificacion())
 					);
 			
 			Tipoidentificacion = session.createQuery(criteria).getSingleResult();
 			
 			//Update		
-			Tipoidentificacion.setDescripcion(desc);
+			Tipoidentificacion.setDescripcion(tp.getDescripcion());
 			session.update(Tipoidentificacion);
 			
 			tx.commit();
@@ -149,30 +151,15 @@ public class ImpTipoIdentificacionDao implements TipoIdentificacionDao   {
 	}
 
 	@Override
-	public TipoIdentificacion Delete(int id) {
+	public TipoIdentificacion delete(int id) {
 		Transaction tx = null;
 		TipoIdentificacion Tipoidentificacion = null;
 		try {
 			tx = session.beginTransaction();
 			
-			// frabrica  para las piezas individuales de criteria 
-			CriteriaBuilder builder = session.getCriteriaBuilder();
-			CriteriaQuery<TipoIdentificacion> criteria = builder.createQuery(TipoIdentificacion.class);
-			
-			// Definir el tipo de entidad que retorna la consulta 
-			Root<TipoIdentificacion> root = criteria.from(TipoIdentificacion.class);
-			
-			//construyendo la consulta 
-			criteria.select(root);
-			criteria.where(
-					builder.equal(root.get(TipoIdentificacion_.idIdentificacion), id)
-					);
-			
-			Tipoidentificacion = session.createQuery(criteria).getSingleResult();
-			
-			// Delete 
-			Tipoidentificacion.setIdIdentificacion(id);			
-			session.delete(Tipoidentificacion);
+			TipoIdentificacion tp = (TipoIdentificacion ) session.createCriteria(TipoIdentificacion.class)
+					.add(Restrictions.eq("idIdentificacion", id)).uniqueResult();
+			session.delete(tp);
 		 		       
 			tx.commit();
 		} 

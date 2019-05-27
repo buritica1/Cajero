@@ -34,11 +34,11 @@ public class TipoIdentificacionService implements Serializable{
 		tipoIdentificacionDao.save(TipoIdentificacion);
 	}
 	
-	public TipoIdentificacion Update(int id,String desc){
-		return tipoIdentificacionDao.Update(id,desc);
+	public TipoIdentificacion Update(TipoIdentificacion tipoIdentificacion){
+		return tipoIdentificacionDao.Update(tipoIdentificacion);
 	}
-	public TipoIdentificacion Delete(int id){
-		return tipoIdentificacionDao.Delete(id);
+	public TipoIdentificacion delete(int id){
+		return tipoIdentificacionDao.delete(id);
 	}
 	public void closeSession(){
 		tipoIdentificacionDao.closeSession();

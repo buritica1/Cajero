@@ -146,7 +146,6 @@ public class ImpMovimientoDao implements MovimientoDao   {
 		return Movimiento;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public Movimiento delete(int id) {
 		// TODO Auto-generated method stub
@@ -155,9 +154,9 @@ public class ImpMovimientoDao implements MovimientoDao   {
 		try {
 			tx = session.beginTransaction();
 			
-			Movimiento movimiento = (Movimiento ) session.createCriteria(Movimiento.class)
+			Movimiento m = (Movimiento ) session.createCriteria(Movimiento.class)
 					.add(Restrictions.eq("idMovimento", id)).uniqueResult();
-			session.delete(movimiento);
+			session.delete(m);
 		 		       
 			tx.commit();
 		} 
@@ -167,7 +166,6 @@ public class ImpMovimientoDao implements MovimientoDao   {
 			}
 			e.printStackTrace();
 		}
-		
 		return Movimiento;	
 	}
 

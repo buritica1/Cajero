@@ -1,14 +1,10 @@
 package co.edu.uniajc.cajero.model;
 // Generated 7/04/2019 01:08:10 PM by Hibernate Tools 5.2.12.Final
 
-
-import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**

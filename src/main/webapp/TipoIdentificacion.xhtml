@@ -10,35 +10,74 @@
 
 </h:head>
 <h:body>
-	<h2>Create Tipo Identificacion</h2>
-
 	<h:form>
 		<p:growl id="growl" life="2000" />
-		<p:fieldset legend="Tipo Identificacion" style="margin-bottom:20px">
-			<h:outputText value="Descripcion: " />
-			<h:inputText id="descripcion" size="40" maxlength="60"
-				value="#{tipoIdentificacionBean.descripcion}">
-			</h:inputText>
-			
+		<p:fieldset legend="Crear Producto" style="margin-bottom:20px">
+			<h:panelGrid columns="2" cellpadding="5">
+				<h:outputText value="Descripcion: " />
+
+				<h:inputText id="Descripcion" size="40" maxlength="60"
+					value="#{tipoIdentificacionBean.descripcion}" required="true">
+					<p:ajax event="keyup" update="out"
+						listener="#{tipoIdentificacionBean.handleKeyEvent}" />
+				</h:inputText>
+
+			</h:panelGrid>
+			<br />
+
 			<p:commandButton value="enviar" id="send" update="growl"
-				action="#{tipoIdentificacionBean.buttonAction}" style="margin-right:20px;"
-				styleClass="ui-priority-primary" />
+				action="#{tipoIdentificacionBean.buttonAction}"
+				style="margin-right:20px;" styleClass="ui-priority-primary" />
+		</p:fieldset>
+		<h:outputLabel id="out" value="#{tipoIdentificacionBean.descripcion}" />
+	</h:form>
+
+	<h:form id="readIdentificaciones">
+
+		<p:growl id="msg" showDetail="true" />
+		<p:fieldset legend="TipoIdentificacion" style="margin-bottom:20px">
+
+			<p:dataTable id="TipoIdentificacionTable" var="tip"
+				value="#{tipoIdentificacionBean.lstIdentificaciones}"
+				editable="true">
+
+				<p:ajax event="rowEdit"
+					listener="#{tipoIdentificacionBean.onRowEdit}"
+					update=":readIdentificaciones:msg" />
+
+				<p:ajax event="rowEditCancel"
+					listener="#{tipoIdentificacionBean.onRowCancel}"
+					update=":readIdentificaciones:msg" />
+
+				<p:column headerText="Descripcion">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{tip.descripcion}" />
+						</f:facet>
+
+						<f:facet name="input">
+							<p:inputText id="descripcion" size="40" maxlength="60"
+								value="#{tip.descripcion}" required="true">
+							</p:inputText>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column style="width:35px">
+					<p:rowEditor />
+					<p:commandButton
+						action="#{tipoIdentificacionBean.deleteTipoIdentificacion(tip.idIdentificacion, tip.descripcion)}"
+						id="delete" style="margin-right:20px;" icon="pi pi-times"
+						title="Eliminar tipo" update=":readIdentificaciones:msg" />
+				</p:column>
+
+				<p:ajax event="rowEdit"
+					listener="#{tipoIdentificacionBean.updateTipoIdentificacion(tip)}"
+					update="TipoIdentificacionTable" />
+
+			</p:dataTable>
+
 		</p:fieldset>
 	</h:form>
-	
-	<h:form>
-		<p:commandButton value="Mostrar" actionListener="#{tipoIdentificacionBean.listar()}" update="table" />
-				
-    <p:dataTable  id="table" value="#{tipoIdentificacionBean.lista}"  var="p">
-       <p:column headerText="id">
-           <h:outputText value="#{p.idIdentificacion}" />
-       </p:column>
-        <p:column headerText="Descripcion">
-           <h:outputText value="#{p.descripcion}" />
-       </p:column>
-       
-    </p:dataTable>
-   </h:form>
-
 </h:body>
 </html>

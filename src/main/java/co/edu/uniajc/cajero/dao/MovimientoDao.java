@@ -1,6 +1,5 @@
 package co.edu.uniajc.cajero.dao;
 
-import java.util.Date;
 import java.util.List;
 
 import co.edu.uniajc.cajero.model.Movimiento;
