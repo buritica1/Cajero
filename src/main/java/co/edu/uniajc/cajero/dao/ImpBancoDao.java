@@ -1,206 +1,211 @@
 package co.edu.uniajc.cajero.dao;
 // Generated 7/04/2019 01:08:54 PM by Hibernate Tools 5.2.12.Final
 
-
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-
 import org.hibernate.Session;
-
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Example;
+import org.hibernate.criterion.Restrictions;
 
 import co.edu.uniajc.cajero.model.Banco;
 import co.edu.uniajc.cajero.model.Banco_;
 
-
-
 /**
- * Home object for domain model class TipoIdentificacion.
- * @see co.edu.uniajc.cajero.dao.TipoIdentificacion
+ * Home object for domain model class Producto.
+ * @see co.edu.uniajc.cajero.dao.Producto
  * @author Hibernate Tools
  */
-public class ImpBancoDao implements BancoDao   {
-
+public class ImpBancoDao implements BancoDao {
+	
 	private Session session;
 	
-
 	public ImpBancoDao(Session session) {
 		this.session = session;
 	}
-	
+
 	@Override
-	public void save(Banco Banco) {
+	public void save(Banco banco) {
+		// TODO Auto-generated method stub
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
 			
-			session.save(Banco);
+			session.save(banco);
 			
 			tx.commit();
-		} 
+		}
 		catch (Exception e) {
-			if(tx != null){
+			if(tx != null) {
 				tx.rollback();
 			}
 			e.printStackTrace();
 		}
-	}			
+		
+	}
 
 	@Override
 	public Banco findById(int id) {
+		// TODO Auto-generated method stub
 		Transaction tx = null;
-		Banco Tipoidentificacion = null;
+		Banco Banco = null;
 		try {
 			tx = session.beginTransaction();
 			
-			// frabrica  para las piezas individuales de criteria 
+			// Contruccion para las piezas individuales de criteria
 			CriteriaBuilder builder = session.getCriteriaBuilder();
 			CriteriaQuery<Banco> criteria = builder.createQuery(Banco.class);
 			
-			// Definir el tipo de entidad que retorna la consulta 
+			// Definir el tipo de entidad que retorna la consulta
 			Root<Banco> root = criteria.from(Banco.class);
 			
-			//construyendo la consulta 
+			//construyendo la consulta
 			criteria.select(root);
 			criteria.where(
 					builder.equal(root.get(Banco_.idBanco), id)
 					);
 			
-			Tipoidentificacion = session.createQuery(criteria).getSingleResult();
+			Banco = session.createQuery(criteria).getSingleResult();
 			
 			tx.commit();
-		} 
+			
+		}
 		catch (Exception e) {
-			if(tx != null){
+			if(tx != null) {
 				tx.rollback();
 			}
 			e.printStackTrace();
 		}
-		return Tipoidentificacion;
+		return Banco;
 	}
 
-	public List<Banco> findByIdall() {
+	@Override
+	public List<Banco> findByall() {
+		// TODO Auto-generated method stub
 		Transaction tx = null;
-		
 		try {
 			tx = session.beginTransaction();
 			
-			// frabrica  para las piezas individuales de criteria 
 			CriteriaBuilder builder = session.getCriteriaBuilder();
 			CriteriaQuery<Banco> criteria = builder.createQuery(Banco.class);
 			
-			// Definir el tipo de entidad que retorna la consulta 
 			Root<Banco> root = criteria.from(Banco.class);
 			
-			//construyendo la consulta 
 			criteria.select(root);
-	
-			List<Banco> lstBanco = session.createQuery(criteria).getResultList();
-					
 			
+			List<Banco> lstBanco= session.createQuery(criteria).getResultList();
 			
 			tx.commit();
 			
 			return lstBanco;
-		} 
+		}
 		catch (Exception e) {
-			if(tx != null){
+			if(tx != null) {
 				tx.rollback();
 			}
 			e.printStackTrace();
 			
 			return null;
 		}
-		
 	}
-
+/*
 	@Override
-	public Banco Update(int id,String nit, String nombre,String direccion,String telefono) {
+	public Producto Update(int id, String desc) {
+		// TODO Auto-generated method stub
 		Transaction tx = null;
-		Banco banco = null;
+		Producto producto = null;
 		try {
 			tx = session.beginTransaction();
 			
-			// frabrica  para las piezas individuales de criteria 
 			CriteriaBuilder builder = session.getCriteriaBuilder();
-			CriteriaQuery<Banco> criteria = builder.createQuery(Banco.class);
+			CriteriaQuery<Producto> criteria = builder.createQuery(Producto.class);
 			
-			// Definir el tipo de entidad que retorna la consulta 
-			Root<Banco> root = criteria.from(Banco.class);
+			Root<Producto> root = criteria.from(Producto.class);
 			
-			//construyendo la consulta 
 			criteria.select(root);
 			criteria.where(
-					builder.equal(root.get(Banco_.idBanco), id)
+					builder.equal(root.get(Producto_.idProducto), id)
 					);
 			
-			banco = session.createQuery(criteria).getSingleResult();
+			producto = session.createQuery(criteria).getSingleResult();
 			
-			//Update		
-			banco.setNombre(nombre);
-			session.update(banco);
+			//Update
+			producto.setDescripcion(desc);
+			session.update(producto);
 			
 			tx.commit();
-		} 
-		catch (Exception e) {
-			if(tx != null){
+		}
+		catch (Exception e ) {
+			if(tx != null) {
 				tx.rollback();
 			}
 			e.printStackTrace();
 		}
-		return banco;
+		return producto;
 	}
-
+*/
+	@Override
+	public Banco Update(Banco B) {
+		Transaction tx = null;
+		Banco Banco = null;
+		try {
+			tx = session.beginTransaction();
+			
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaQuery<Banco> criteria = builder.createQuery(Banco.class);
+			
+			Root<Banco> root = criteria.from(Banco.class);
+			
+			criteria.select(root);
+			criteria.where(
+					builder.equal(root.get(Banco_.idBanco), B.getIdBanco())
+					);
+			Banco = session.createQuery(criteria).getSingleResult();
+			
+			Banco.setNombre(B.getNombre());
+			Banco.setNit(B.getNit());
+			Banco.setDireccion(B.getDireccion());
+			Banco.setTelefono(B.getTelefono());
+			session.update(Banco);
+			
+			tx.commit();
+		}
+		catch (Exception e) {
+			if(tx != null) {
+				tx.rollback();
+			}
+			e.printStackTrace();
+		}
+		return Banco;
+	}
+	
 	@Override
 	public Banco Delete(int id) {
+		// TODO Auto-generated method stub
 		Transaction tx = null;
-		Banco banco = null;
+		Banco Banco = null;
 		try {
 			tx = session.beginTransaction();
 			
-			// frabrica  para las piezas individuales de criteria 
-			CriteriaBuilder builder = session.getCriteriaBuilder();
-			CriteriaQuery<Banco> criteria = builder.createQuery(Banco.class);
+			Banco B = (Banco ) session.createCriteria(Banco.class)
+					.add(Restrictions.eq("idBanco", id)).uniqueResult();
+			session.delete(B);
 			
-			// Definir el tipo de entidad que retorna la consulta 
-			Root<Banco> root = criteria.from(Banco.class);
-			
-			//construyendo la consulta 
-			criteria.select(root);
-			criteria.where(
-					builder.equal(root.get(Banco_.idBanco), id)
-					);
-			
-			banco = session.createQuery(criteria).getSingleResult();
-			
-			// Delete 
-			//banco.setIdIdentificacion(id);			
-			session.delete(banco);
-		 		       
 			tx.commit();
-		} 
+		}
 		catch (Exception e) {
-			if(tx != null){
+			if(tx != null) {
 				tx.rollback();
 			}
-			e.printStackTrace();
+			e.printStackTrace();			
 		}
-		return banco ;
+		return Banco;
 	}
-
+	
 	public void closeSession() {
 		// TODO Auto-generated method stub
-		
 	}
 
-	
-
-	
-
-	
 }
-

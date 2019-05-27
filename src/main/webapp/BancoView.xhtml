@@ -10,88 +10,121 @@
 
 </h:head>
 <h:body>
-	<h2>View Banco</h2>
-
 	<h:form>
 		<p:growl id="growl" life="2000" />
-		<p:fieldset legend="BANCO" style="margin-bottom:20px">
+		<p:fieldset legend="Crear Banco" style="margin-bottom:20px">
 			<h:panelGrid columns="2" cellpadding="5">
-				<h:outputText value="nit: " />
-				<h:inputText id="nit" size="40" maxlength="60"
-					value="#{bancoBean.nit}">
-				</h:inputText>
-
 				<h:outputText value="Nombre: " />
-				<h:inputText id="nombre" size="40" maxlength="60"
-					value="#{bancoBean.nombre}">
+				<h:inputText id="Nombre" size="40" maxlength="60"
+					value="#{bancoBean.nombre}" required="true">
+					<p:ajax event="keyup" update="out"
+						listener="#{bancoBean.handleKeyEvent}" />
+				</h:inputText>
+				<h:outputText value="NIT: " />
+				<h:inputText id="Nit" size="40" maxlength="60"
+					value="#{bancoBean.nit}" required="true">
 					
 				</h:inputText>
-				
-				
-				
-				<h:outputText value="direccion: " />
-				<h:inputText id="direccion" size="40" maxlength="60"
-					value="#{bancoBean.direccion}">
+				<h:outputText value="Direccion: " />
+				<h:inputText id="Direccion" size="40" maxlength="60"
+					value="#{bancoBean.direccion}" required="true">
+					
 				</h:inputText>
-				
-				<h:outputText value="telefono: " />
-				<h:inputText id="telefono" size="40" maxlength="60"
-					value="#{bancoBean.telefono}">
+				<h:outputText value="Telefono: " />
+				<h:inputText id="Telefono" size="40" maxlength="60"
+					value="#{bancoBean.telefono}" required="true">
+					
 				</h:inputText>
-				</h:panelGrid>
-			
+			</h:panelGrid>
 			<br />
-
 
 			<p:commandButton value="enviar" id="send" update="growl"
 				action="#{bancoBean.buttonAction}" style="margin-right:20px;"
 				styleClass="ui-priority-primary" />
 		</p:fieldset>
-
-		<!-- <h:outputLabel id="out" value="#{bancoBean.nit}" />-->
+		<h:outputLabel id="out" value="#{bancoBean.nombre}" />
 	</h:form>
 
+	<h:form id="readBanco">
+	
+		<p:growl id="msg" showDetail="true" />
+		<p:fieldset legend="Banco" style="margin-bottom:20px">
+			<p:dataTable id="BancoTable" var="ban"
+				value="#{bancoBean.lstBancos}" editable="true">
+				<p:ajax event="rowEdit" listener="#{bancoBean.onRowEdit}"
+					update=":readBanco:msg" />
+				<p:ajax event="rowEditCancel" listener="#{bancoBean.onRowCancel}"
+					update=":readBanco:msg" />
 
-	<h:form>
-		<p:commandButton value="Mostrar" actionListener="#{bancoBean.listar()}" update="table" />
+				<p:column headerText="Nombre">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{ban.nombre}" />
+						</f:facet>
+
+						<f:facet name="input">
+							<p:inputText id="nombre" size="40" maxlength="60"
+								value="#{ban.nombre}" required="true">
+							</p:inputText>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
 				
-    <p:dataTable  id="table" value="#{bancoBean.lista}"  var="p">
-       <p:column headerText="id">
-           <h:outputText value="#{p.idBanco}" />
-       </p:column>
-        <p:column headerText="direccion">
-           <h:outputText value="#{p.direccion}" />
-       </p:column>
-        <p:column headerText="nit">
-           <h:outputText value="#{p.nit}" />
-       </p:column>
-        <p:column headerText="nombre">
-           <h:outputText value="#{p.nombre}" />
-       </p:column>
-        <p:column headerText="telefono">
-           <h:outputText value="#{p.telefono}" />
-       </p:column>
-       
-    </p:dataTable>
-   </h:form>
+				<p:column headerText="Nit">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{ban.nit}" />
+						</f:facet>
 
-	<!-- 		<h:form> -->
-	<!--             User: <h:inputText id="user" size="40" maxlength="60" -->
-	<!-- 				value="#{userManagedBean.user}" /> -->
-	<!-- 			<br /> -->
-	<!--             Nick name: <h:inputText id="nickName" size="40" -->
-	<!-- 				maxlength="60" value="#{userManagedBean.nickName}" /> -->
-	<!-- 			<br /> -->
-	<!--             Email: <h:inputText id="email" size="40" maxlength="60" -->
-	<!-- 				value="#{userManagedBean.email}" /> -->
-	<!-- 			<br /> -->
-	<!--             Validation Code:<h:inputText id="validationCode" size="40" -->
-	<!-- 				maxlength="60" value="#{userManagedBean.validationCode}" /> -->
-	<!-- 			<br /> -->
-	<!--             The validation code is necesary to validate the user<br /> -->
-	<!--             (El código de validación es necesario para validad el usuario)<br /> -->
-	<!-- 			<h:commandButton id="submit" value="SUBMIT" action="validation" /> -->
-	<!-- 		</h:form> -->
+						<f:facet name="input">
+							<p:inputText id="nit" size="40" maxlength="60"
+								value="#{ban.nit}" required="true">
+							</p:inputText>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				
+				<p:column headerText="Direccion">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{ban.direccion}" />
+						</f:facet>
 
+						<f:facet name="input">
+							<p:inputText id="direccion" size="40" maxlength="60"
+								value="#{ban.direccion}" required="true">
+							</p:inputText>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				
+				<p:column headerText="Telefono">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{ban.telefono}" />
+						</f:facet>
+
+						<f:facet name="input">
+							<p:inputText id="telefono" size="40" maxlength="60"
+								value="#{ban.telefono}" required="true">
+							</p:inputText>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column style="width:35px">
+					<p:rowEditor />
+					<p:commandButton
+						action="#{bancoBean.deleteBanco(ban.idBanco, ban.nit)}"
+						id="delete" style="margin-right:20px;" icon="pi pi-times"
+						title="Eliminar Banco" update=":readBanco:msg" />
+				</p:column>
+
+				<p:ajax event="rowEdit" listener="#{bancoBean.updateBanco(ban)}" update="BancoTable"/>
+
+
+			</p:dataTable>
+		</p:fieldset>
+	</h:form>
 </h:body>
 </html>
